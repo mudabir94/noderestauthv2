@@ -12,9 +12,7 @@ jobs:
       - 
         name: Checkout
         uses: actions/checkout@v2
-      - 
-        name: unit testing
-        run: npm test
+
       -       
         name: Set up Docker Buildx
         id: buildx
