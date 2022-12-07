@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  restauth:
+    build: .
+    ports:
+    - 3000:3000
+    environment:
+    - PORT=3000
+    - MONGODBURL=mongodb://mongo:27017/node-auth
+    - NODE_ENV=production
+    volumes:
+    - ./:/app
+    command: npm run start
+
+  mongo:
+    image: mongo:4.2.8
+
+    ports:
+    - 27017:27017
+    volumes:
+    - mongodb:/data/db
+    - mongodb_config:/data/configdb
+volumes:
+ mongodb:
+ mongodb_config:

@@ -6,7 +6,7 @@ var cors = require('cors')
 
 const app = express()
 const port = process.env.PORT || 3000
-const hostname = '127.0.0.1';
+const hostname = '0.0.0.0';
 
 app.use(express.json())
 app.use((req, res, next) => {
