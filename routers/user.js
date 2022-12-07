@@ -23,7 +23,7 @@ router.get('/user/me', auth ,async (req, res) => {
 router.post('/register-user',  async (req, res) => {
 
     const user = new User({
-        'username':req.body.name,
+        'name':req.body.name,
         'password':req.body.password
     })
     try{
@@ -56,7 +56,8 @@ router.post ("/user/login", async (req,res)=> {
     }
 })
 
-// Logout user
+// Logout user from the current session. 
+// E.g logout from only one devices.
 router.post ("/user/logout",auth, async (req,res)=> {
     try{
         req.user.tokens = req.user.tokens.filter((token)=>{
@@ -70,6 +71,7 @@ router.post ("/user/logout",auth, async (req,res)=> {
 })
 
 // Logout user from all sessions 
+// Logout from all devices.
 router.post ("/user/logoutAll",auth, async (req,res)=> {
     try{
         req.user.tokens = []
@@ -79,12 +81,30 @@ router.post ("/user/logoutAll",auth, async (req,res)=> {
         res.status(500).send()
     }
 })
+// Update profile
+router.patch('/users/me', auth, async (req, res) => {
+    const updates = Object.keys(req.body)
+    const allowedUpdates = ['name', 'email', 'password', 'age']
+    const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
+
+    if (!isValidOperation) {
+        return res.status(400).send({ error: 'Invalid updates!' })
+    }
+
+    try {
+        updates.forEach((update) => req.user[update] = req.body[update])
+        await req.user.save()
+        res.send(req.user)
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
 
 // Update User Info by id
 router.patch("/user/:id", async(req,res)=>{
     const _id=req.params.id
     const updates=Object.keys(req.body)
-    const allowedUpdates = ['username','email','password']
+    const allowedUpdates = ['name','email','password']
     const isValidOperation = updates.every((update)=>{
         return allowedUpdates.includes(update)
     })
@@ -108,12 +128,18 @@ router.patch("/user/:id", async(req,res)=>{
         res.status(500).send(e)
     }
 })
-// Delete User by id
-router.delete("/user/:id",async (req,res)=>{
+// Get User de Info
+router.get('/user/me', auth ,async (req, res) => {
+    res.send(req.user)
+})
+
+// Delete my profile
+router.delete("/user/me", auth , async (req,res)=>{
     try{
-        const user=await User.findByIdAndDelete(req.params.id)
-        // await req.user.remove()
-        res.send(user)
+        // const user=await User.findByIdAndDelete(req.params.id)
+        console.log("delete request",req.user)
+        await req.user.remove()
+        res.send(req.user)
     }
     catch(e){
         res.status(500).send()

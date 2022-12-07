@@ -1,6 +1,6 @@
 const express = require('express')
 require('./db/mongoose')
-const User = require('./models/user')
+// const User = require('./models/user')
 const userRouter= require("./routers/user")
 var cors = require('cors')
 
@@ -32,3 +32,4 @@ app.use(userRouter)
 app.listen(port, () => {
     console.log(`Server running at http://${hostname}:${port}/`)
 })
+module.exports = app
