@@ -9,5 +9,7 @@ User Authentication Application Demo Using NodeJS
 - Running `npm start` will start the server.
     - To run .env should be added having two variables similar to dev.env file. 
         - MONGODBURL=mongodb://127.0.0.1:27017/{database_name}
-        - PORT
+        - PORT=3000
+
+# Run using github package
 
