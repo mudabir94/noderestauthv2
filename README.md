@@ -15,4 +15,5 @@ User Authentication Application Demo Using NodeJS
 -  Use the commad in the github package to download the dockerimage.
 -  Once project set locally, in the command prompt simple type `docker compose up`.
 -  The image builds and the container starts running. 
+-  
 
