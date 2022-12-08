@@ -22,7 +22,7 @@ jobs:
       - run: npm ci
       - run: npm run build --if-present
       - run: npm test
-        env : mongodb://127.0.0.1:27017/nodeblog-test
+        env : ${{secrets.MONGOTESTURL}}
       -       
         name: Set up Docker Buildx
         id: buildx
