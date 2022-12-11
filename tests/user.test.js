@@ -1,13 +1,9 @@
 const request = require('supertest')
 const app = require('../index')
 const User = require('../models/user')
-const { userOneId, userOne, setupDatabase } = require('./fixtures/db')
+const { userOneId, userOne, userTwoId, userTwo, setupDatabase } = require('./fixtures/db')
 
-beforeEach(() => {
-    setupDatabase()
-   
-})
-
+beforeEach(setupDatabase)
 test('Should signup a new user', async () => {
     const response = await request(app).post('/register-user').send({
         name: 'Andrew',
@@ -29,17 +25,23 @@ test('Should signup a new user', async () => {
 })
 
 test('Should login existing user', async () => {
-    const response = await request(app).post('/user/login').send({
+    console.log("userOne",userOne)
+    // const user1 = await User.findById(userOneId)
+    // console.log("user name",user1.name)
+    const response = await request(app)
+    .post('/user/login')
+    .send({
         name: userOne.name,
         password: userOne.password
     }).expect(200)
     const user = await User.findById(userOneId)
+    console.log("user",user)
     expect(response.body.token).toBe(user.tokens[1].token)
 })
 
 test('Should not login nonexistent user', async () => {
     await request(app).post('/user/login').send({
-        email: userOne.email,
+        name: userOne.name,
         password: 'thisisnotmypass'
     }).expect(400)
 })

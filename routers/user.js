@@ -27,13 +27,8 @@ router.post('/register-user',  async (req, res) => {
         'password':req.body.password
     })
     try{
-        console.log('before save');
 
         let saveUser=await user.save()
-        console.log(saveUser); //when success it print.
-
-        console.log('after save');
-
         const token = await user.generateAuthToken()
         res.status(201).send({user,token})
 
