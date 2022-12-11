@@ -26,12 +26,12 @@ const userTwo = {
 
 
 
-const setupDatabase = async (next) => {
+const setupDatabase = async () => {
     await User.deleteMany()
    
     await new User(userOne).save()
     await new User(userTwo).save()
-    next()
+    
 }
 
 module.exports = {
