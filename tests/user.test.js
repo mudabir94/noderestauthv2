@@ -3,7 +3,10 @@ const app = require('../index')
 const User = require('../models/user')
 const { userOneId, userOne, setupDatabase } = require('./fixtures/db')
 
-beforeEach(setupDatabase)
+beforeEach(() => {
+    setupDatabase()
+   
+})
 
 test('Should signup a new user', async () => {
     const response = await request(app).post('/register-user').send({
