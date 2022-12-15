@@ -70,7 +70,7 @@ jobs:
         - run: npm run build --if-present
         - name: create env file
           run: |
-          touch .env
-          echo MONGODBURL=${{ secrets.MONGOTESTURL }} >> .env
+                touch .env
+                echo MONGODBURL=${{ secrets.MONGOTESTURL }} >> .env
         - run: npm run test
           
