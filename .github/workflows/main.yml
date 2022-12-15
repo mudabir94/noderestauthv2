@@ -72,5 +72,5 @@ jobs:
           run: |
           touch .env
           echo MONGODBURL=${{ secrets.MONGOTESTURL }} >> .env
-        - run: npm run .env test
+        - run: npm run test
           
