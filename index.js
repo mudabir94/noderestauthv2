@@ -30,6 +30,8 @@ app.use(userRouter)
 
 
 app.listen(port, () => {
+    console.log(process.env.MONGODBURL)
+
     console.log(`Server running at http://${hostname}:${port}/`)
 })
 module.exports = app

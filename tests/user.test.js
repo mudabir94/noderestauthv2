@@ -2,7 +2,6 @@ const request = require('supertest')
 const app = require('../index')
 const User = require('../models/user')
 const { userOneId, userOne, userTwoId, userTwo, setupDatabase } = require('./fixtures/db')
-console.log(process.env.MONGODBURL)
 beforeEach(setupDatabase)
 test('Should signup a new user', async () => {
     const response = await request(app).post('/register-user').send({
